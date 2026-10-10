@@ -1,0 +1,9 @@
+{
+  "name": "budzik-invitational",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test checks/*.test.mjs",
+    "build": "python build.py"
+  }
+}

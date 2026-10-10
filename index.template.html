@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow"><meta name="description" content="The Budzik Invitational archive. Seasons, scoreboards, playoff finishes, and manager rivalries since 2015.">
+  <meta name="theme-color" content="#172d2b"><title>Budzik Invitational · League Archive</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <a class="skip" href="#content">Skip to league history</a>
+  <div class="layout">
+    <aside class="sidebar">
+      <a class="brand" href="#view=season&season=2015" aria-label="Budzik archive home"><span class="monogram">B<span>●</span></span><span>BUDZIK<small>INVITATIONAL</small></span></a>
+      <div class="sidebar-rule"></div><p class="nav-caption">THE LEAGUE ARCHIVE</p>
+      <nav id="navigation" aria-label="League views">
+        <button data-view="predictions"><span class="nav-icon">◈</span>Playoff predictions</button>
+        <button data-view="divisions"><span class="nav-icon">♜</span>Division titles</button>
+        <button data-view="activity"><span class="nav-icon">↗</span>Moves & trades</button>
+        <button data-view="planner"><span class="nav-icon">▦</span>2026 matchups</button>
+        <button data-view="rivalries"><span class="nav-icon">⇅</span>Rivalry leaderboard</button>
+        <button data-view="season"><span class="nav-icon">▤</span>Season overview</button>
+        <button data-view="matchups"><span class="nav-icon">↔</span>Matchups</button>
+        <button data-view="playoffs"><span class="nav-icon">♜</span>Playoff finishes</button>
+        <button data-view="highlights"><span class="nav-icon">★</span>Game records</button>
+        <button data-view="records"><span class="nav-icon">▥</span>All-time records</button>
+        <button data-view="h2h"><span class="nav-icon">⇄</span>Head to head</button>
+        <button data-view="managers"><span class="nav-icon">◎</span>Managers & aliases</button>
+      </nav>
+      <div class="season-nav"><p class="nav-caption">COMPILED SEASONS</p><div id="season-buttons"></div></div>
+      <div class="sidebar-bottom"><button id="archive-button" class="archive-link">Archive notes <span>↗</span></button><p><span class="dot"></span> Public league archive</p><small>A league worth remembering.<br>Est. 2015</small></div>
+    </aside>
+    <div class="workspace">
+      <header class="topbar"><span>FANTASY FOOTBALL <span class="slash">/</span> LEAGUE HISTORY</span><span class="privacy"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="5" y="8" width="10" height="9" rx="2"/><path d="M7 8V5a3 3 0 0 1 6 0v3"/></svg>League archive</span></header>
+      <main id="content" tabindex="-1"><div class="loading">Opening the league archive…</div></main>
+      <footer><span>Budzik Invitational <span class="footer-dot">·</span> History since 2015</span><a href="./history.json" download="Budzik_League_History.json">Download source archive ↓</a></footer>
+    </div>
+  </div>
+  <noscript><div class="fatal">Enable JavaScript to browse the interactive league archive. <a href="./history.json">View the saved data</a>.</div></noscript>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
