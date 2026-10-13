@@ -164,6 +164,54 @@ function simulatePlayoffs(archive,{season='2026',iterations=20000,seed=20261010}
  return {iterations,sd,variabilityDegreesOfFreedom:df,rows:totals.map((r,i)=>({...teams[i],playoffChance:r.playoff/iterations,divisionChance:r.division/iterations,byeChance:r.bye/iterations,projectedWins:r.wins/iterations}))};
 }
 
+// Comparable cumulative totals require a complete league scoreboard in every week.
+function completeRegularWeeks(archive, season) {
+ const teams=archive.seasons[season].teams,expected=new Set(teams.map(t=>t.manager)),weeks=new Map();
+ for(const g of filterGames(archive,{season,phase:'regular_season'})){if(!weeks.has(g.week))weeks.set(g.week,[]);weeks.get(g.week).push(g);}
+ return new Map([...weeks].filter(([,gs])=>{const names=gs.flatMap(g=>[g.a.manager,g.b.manager]);return names.length===expected.size&&new Set(names).size===expected.size&&names.every(n=>expected.has(n));}));
+}
+function seasonFinish(archive,season,manager){
+ const s=archive.seasons[season];
+ if(s.status==='in_progress')return 'In progress';
+ if(s.champion_manager===manager)return '1st · Champion';
+ if(s.runner_up_manager===manager)return '2nd · Runner-up';
+ const gs=filterGames(archive,{season,phase:'playoffs',manager});
+ if(!gs.length)return s.champion_manager?'Did not qualify':'Not recorded';
+ const last=gs.slice().sort((a,b)=>b.week-a.week)[0];
+ return String(last.round).toLowerCase()==='semifinal'?'Semifinal exit · place not recorded':String(last.round).toLowerCase()==='quarterfinal'?'Quarterfinal exit · place not recorded':'Playoff qualifier · place not recorded';
+}
+function cumulativePfRecords(archive,{week=4,season='all',order='highest',query=''}={}){
+ const rows=[],q=query.trim().toLowerCase();week=Number(week);
+ for(const [year,s] of Object.entries(archive.seasons)){
+  if(season!=='all'&&String(season)!==year)continue;
+  const complete=completeRegularWeeks(archive,year);
+  if(!Array.from({length:week},(_,i)=>i+1).every(w=>complete.has(w)))continue;
+  const games=Array.from({length:week},(_,i)=>complete.get(i+1)).flat(),final=standings(archive,year);
+  for(const t of s.teams){if(q&&![t.manager,t.team_name].some(x=>x.toLowerCase().includes(q)))continue;
+   const total=stats(games,t.manager);rows.push({season:year,manager:t.manager,team:t.team_name,...total,pf:Math.round(total.pf*100)/100,finish:seasonFinish(archive,year,t.manager),regularRank:final.find(r=>r.manager===t.manager)?.rank});
+  }
+ }
+ rows.sort((a,b)=>(order==='lowest'?a.pf-b.pf:b.pf-a.pf)||Number(a.season)-Number(b.season)||a.manager.localeCompare(b.manager));
+ return rows.map((r,i)=>({...r,rank:i&&r.pf===rows[i-1].pf?rows.findIndex(x=>x.pf===r.pf)+1:i+1}));
+}
+function toughOpponentSeasons(archive,{season='all',query='',metric='combined'}={}){
+ const rows=[],q=query.trim().toLowerCase();
+ for(const [year,s] of Object.entries(archive.seasons)){
+  if(season!=='all'&&String(season)!==year)continue;
+  const weeks=completeRegularWeeks(archive,year),byManager=new Map(s.teams.map(t=>[t.manager,{season:year,manager:t.manager,team:t.team_name,highest:0,second:0,combined:0,weeks:weeks.size,details:[],finish:seasonFinish(archive,year,t.manager)}]));
+  for(const [week,gs] of weeks){const scores=gs.flatMap(g=>[g.a,g.b]).map(t=>Math.round(t.score*100));
+   for(const g of gs)for(const [t,opp] of [[g.a,g.b],[g.b,g.a]]){
+    // Competition ranks: 1,1,3 for a tie at the top; all tied teams count.
+    const rank=1+scores.filter(n=>n>Math.round(opp.score*100)).length;
+    if(rank>2)continue;const r=byManager.get(t.manager);r[rank===1?'highest':'second']++;r.combined++;r.details.push({week,opponent:opp.manager,opponentTeam:opp.team_name,score:opp.score,rank,result:outcome(t.score,opp.score)});
+   }
+  }
+  rows.push(...[...byManager.values()].filter(r=>r.weeks&&(!q||[r.manager,r.team].some(x=>x.toLowerCase().includes(q)))));
+ }
+ rows.sort((a,b)=>b[metric]-a[metric]||Number(a.season)-Number(b.season)||a.manager.localeCompare(b.manager));
+ return rows.map((r,i)=>({...r,rank:i&&r[metric]===rows[i-1][metric]?rows.findIndex(x=>x[metric]===r[metric])+1:i+1}));
+}
+
 
 const escape = s => String(s ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const number = n => n == null ? '—' : new Intl.NumberFormat('en-US',{maximumFractionDigits:2}).format(n);
@@ -179,8 +227,8 @@ try {const saved=JSON.parse(window.localStorage?.getItem('budzik-weekly-plans-20
 function plannedPairs(){const season=archive.seasons['2026'],id=new Map((season?.teams||[]).map(t=>[String(t.team_id),t.manager]));const supplied=[...(season?.games||[]),...(season?.remaining_schedule||[])].filter(g=>g.week===Number(state.plannerWeek)).map(g=>({a:id.get(String(g.team_id)),b:id.get(String(g.opponent_id))}));const saved=weeklyPlans[state.plannerWeek]||supplied;return Array.from({length:6},(_,i)=>({a:archive.managers.includes(saved?.[i]?.a)?saved[i].a:'',b:archive.managers.includes(saved?.[i]?.b)?saved[i].b:''}));}
 function savePlan(pairs){weeklyPlans[state.plannerWeek]=pairs;try{window.localStorage?.setItem('budzik-weekly-plans-2026',JSON.stringify(weeklyPlans));planStorageAvailable=!!window.localStorage;}catch{planStorageAvailable=false;}}
 
-const views = ['season','matchups','playoffs','h2h','records','highlights','planner','rivalries','divisions','activity','predictions','managers','profile','archive'];
-const defaultState = {view:'season',season:'2015',scope:'all',phase:'all',week:'all',manager:'all',a:'Josh',b:'Taylor',profile:'Josh',q:'',sort:'wins',category:'high_team',plannerWeek:'1',minimum:'3',order:'best',forecastWeek:'5',startRecord:'0–4–0'};
+const views = ['season','matchups','playoffs','h2h','records','weeklyrecords','highlights','planner','rivalries','divisions','activity','predictions','managers','profile','archive'];
+const defaultState = {view:'season',season:'2015',scope:'all',phase:'all',week:'all',manager:'all',a:'Josh',b:'Taylor',profile:'Josh',q:'',sort:'wins',category:'high_team',plannerWeek:'1',minimum:'3',order:'best',forecastWeek:'5',startRecord:'0–4–0',recordWeek:'4',recordLimit:'10',pfOrder:'highest',opponentMetric:'combined'};
 
 function readState() {
   const p = new URLSearchParams(location.hash.slice(1));
@@ -199,6 +247,10 @@ function readState() {
   if(!['best','worst'].includes(state.order))state.order='best';
   if(!/^(5|6|7|8|9|10|11|12|13|14)$/.test(state.forecastWeek))state.forecastWeek='5';
   if(!/^([0-4])–([0-4])–([0-4])$/.test(state.startRecord))state.startRecord='0–4–0';
+  if(!/^(1[0-4]|[1-9])$/.test(state.recordWeek))state.recordWeek='4';
+  if(!['5','10','all'].includes(state.recordLimit))state.recordLimit='10';
+  if(!['highest','lowest'].includes(state.pfOrder))state.pfOrder='highest';
+  if(!['highest','second','combined'].includes(state.opponentMetric))state.opponentMetric='combined';
   state.q=state.q.slice(0,100);
 }
 function update(changes,replace=false) {
@@ -332,6 +384,15 @@ function highlightsView() {
  `<div class="notice">Team scores are individual performances; combined scores add both teams. Closest decided games exclude ties, which have their own category. Rankings reflect the selected filters. Ties share a rank. Scoring formats changed across seasons, so use the season filter for comparisons within one year.</div>`+
  `<section class="panel"><div class="panel-heading"><div><h2>${escape(GAME_RECORDS[state.category])}</h2><p>${rows.length} matching ${state.category.endsWith('_team')?'performances':'games'} · Top 25 ranks, including tied records</p></div></div><div class="table-wrap"><table><thead><tr><th>Rank</th><th class="num">${state.category.endsWith('_team')?'Team score':state.category.endsWith('_total')?'Combined points':'Margin'}</th><th>Matchup / final score</th><th>Season / week</th><th>Phase</th></tr></thead><tbody>${shown.map(r=>{const g=r.game;return `<tr><td><span class="rank ${r.rank<=3?'top':''}">${r.rank}</span></td><td class="num record">${number(r.value)}${r.manager?`<small class="record-owner">${managerLink(r.manager)}</small>`:''}</td><td class="team-cell">${managerLink(g.a.manager)} ${number(g.a.score)} — ${number(g.b.score)} ${managerLink(g.b.manager)}<small>${escape(g.a.team_name)} vs ${escape(g.b.team_name)}</small></td><td>${g.season} · Week ${g.week}${g.weekInferred?' (inferred)':''}</td><td>${badge(g.phase)}</td></tr>`;}).join('')}</tbody></table></div>${!rows.length?'<div class="empty"><strong>No matching records</strong>Try another category, season, phase, or search.</div>':''}</section>`;
 }
+function weeklyRecordsView(){
+ const pf=cumulativePfRecords(archive,{week:state.recordWeek,season:state.scope,order:state.pfOrder,query:state.q});
+ const opponents=toughOpponentSeasons(archive,{season:state.scope,query:state.q,metric:state.opponentMetric});
+ const limit=rows=>state.recordLimit==='all'?rows:rows.filter(r=>r.rank<=Number(state.recordLimit));
+ return heading('WEEK BY WEEK','Season scoring & tough opponents.','Compare cumulative regular-season PF at the same point in each season, and count matchups against the top weekly scorers.',false)+
+ `<div class="filters">${select('Seasons','scope',[['all','All seasons'],...seasonOptions()])}${select('Show','recordLimit',[['5','Top 5'],['10','Top 10'],['all','All results']])}<label class="grow">Search manager or team<input id="alias-search" type="search" value="${escape(state.q)}" placeholder="Try Josh or Fluff…" maxlength="100"></label></div>`+
+ `<section class="panel"><div class="panel-heading"><div><h2>Cumulative points for</h2><p>Weeks 1–${state.recordWeek} · Tied ranks are included at the cutoff.</p></div></div><div class="filters">${select('Through week','recordWeek',Array.from({length:14},(_,i)=>[String(i+1),`Week ${i+1}`]))}${select('Ranking','pfOrder',[['highest','Highest total PF'],['lowest','Lowest total PF']])}</div><div class="table-wrap"><table><thead><tr><th>Rank</th><th>Season</th><th>Manager / team</th><th class="num">Total PF</th><th>Record through week</th><th>Regular-season rank</th><th>Final finish</th></tr></thead><tbody>${limit(pf).map(r=>`<tr><td>${r.rank}</td><td>${r.season}</td><td class="team-cell">${managerLink(r.manager)}<small>${escape(r.team)}</small></td><td class="num record">${number(r.pf)}</td><td>${record(r)}</td><td>${r.season==='2026'?'Current ':''}${r.regularRank}</td><td>${escape(r.finish)}</td></tr>`).join('')}</tbody></table></div>${!pf.length?empty('No complete totals for this week','Select an earlier week or another season.'):''}<div class="panel-footnote">A season is included only when every team has a saved final score in every week through the selected week. Playoffs and partial scores are excluded. Different scoring rules across years can affect comparisons. Exact final places beyond champion and runner-up were not supplied.</div></section>`+
+ `<section class="panel" style="margin-top:22px"><div class="panel-heading"><div><h2>Most games against top scorers</h2><p>Each opponent is ranked against all teams scoring that week, including your own team.</p></div></div><div class="filters">${select('Rank by','opponentMetric',[['combined','Highest or second-highest'],['highest','Highest scorer'],['second','Second-highest scorer']])}</div><div class="table-wrap"><table><thead><tr><th>Rank</th><th>Season</th><th>Manager / team</th><th class="num">Faced #1</th><th class="num">Faced #2</th><th class="num">Combined</th><th class="num">Weeks counted</th><th>Final finish</th><th>Qualifying matchups</th></tr></thead><tbody>${limit(opponents).map(r=>`<tr><td>${r.rank}</td><td>${r.season}</td><td class="team-cell">${managerLink(r.manager)}<small>${escape(r.team)}</small></td><td class="num">${r.highest}</td><td class="num">${r.second}</td><td class="num record">${r.combined}</td><td class="num">${r.weeks}${r.season==='2026'?' · ongoing':''}</td><td>${escape(r.finish)}</td><td><details><summary>View ${r.combined} games</summary>${r.details.map(d=>`<div>Week ${d.week}: ${escape(d.opponent)} · ${number(d.score)} PF · #${d.rank} · ${d.result}</div>`).join('')||'None'}</details></td></tr>`).join('')}</tbody></table></div>${!opponents.length?empty('No matching seasons','Change the search or season filter.'):''}<div class="panel-footnote">Regular season only. Incomplete league scoreboards are excluded. Tied scorers share competition rank: 1, 1, 3; two teams tied for first both count as #1, and there is no #2 that week. The ongoing season is counted only through saved final weeks.</div></section>`;
+}
 function recordsView() {
   const games=filterGames(archive,{season:state.scope,phase:state.phase});
   const years=state.scope==='all'?Object.keys(archive.seasons):[state.scope];
@@ -372,8 +433,8 @@ function render() {
   const focus=document.activeElement?.id,position=document.activeElement?.selectionStart;
   document.querySelectorAll('[data-view]').forEach(b=>{const active=b.dataset.view===(state.view==='profile'?'managers':state.view);b.classList.toggle('active',active);if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});
   document.getElementById('season-buttons').innerHTML=Object.keys(archive.seasons).map(y=>`<button class="season-button ${state.season===y?'active':''}" data-select-season="${y}"${state.season===y?' aria-current="true"':''}>${y}<small>${archive.seasons[y].status==='in_progress'?'Through Week 4':filterGames(archive,{season:y,phase:'unconfirmed'}).length?'Phase unconfirmed':'Regular complete'}</small></button>`).join('');
-  content.innerHTML=({season:seasonView,matchups:matchupView,playoffs:playoffView,h2h:h2hView,records:recordsView,highlights:highlightsView,planner:plannerView,rivalries:rivalriesView,divisions:divisionsView,activity:activityView,predictions:predictionsView,managers:managerView,profile:profileView,archive:archiveView}[state.view])();
-  document.title=`${state.view==='profile'?state.profile:state.view==='h2h'?'Head to head':state.view==='predictions'?'Playoff predictions':state.view==='activity'?'Moves & trades':state.view==='divisions'?'Division titles':state.view==='planner'?'2026 matchups':state.view==='rivalries'?'Rivalry leaderboard':state.view==='highlights'?'Game records':state.view==='records'?'All-time records':state.view==='managers'?'Managers':state.view==='archive'?'Archive notes':state.season} · Budzik Invitational`;
+  content.innerHTML=({season:seasonView,matchups:matchupView,playoffs:playoffView,h2h:h2hView,records:recordsView,weeklyrecords:weeklyRecordsView,highlights:highlightsView,planner:plannerView,rivalries:rivalriesView,divisions:divisionsView,activity:activityView,predictions:predictionsView,managers:managerView,profile:profileView,archive:archiveView}[state.view])();
+  document.title=`${state.view==='profile'?state.profile:state.view==='h2h'?'Head to head':state.view==='predictions'?'Playoff predictions':state.view==='activity'?'Moves & trades':state.view==='divisions'?'Division titles':state.view==='planner'?'2026 matchups':state.view==='rivalries'?'Rivalry leaderboard':state.view==='highlights'?'Game records':state.view==='weeklyrecords'?'Weekly season records':state.view==='records'?'All-time records':state.view==='managers'?'Managers':state.view==='archive'?'Archive notes':state.season} · Budzik Invitational`;
   if(focus==='alias-search'){const el=document.getElementById(focus);el?.focus();if(position!=null)el?.setSelectionRange(position,position);}
   else if(focus?.startsWith('filter-'))document.getElementById(focus)?.focus();
 }

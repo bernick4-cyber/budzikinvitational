@@ -162,3 +162,51 @@ export function simulatePlayoffs(archive,{season='2026',iterations=20000,seed=20
  }
  return {iterations,sd,variabilityDegreesOfFreedom:df,rows:totals.map((r,i)=>({...teams[i],playoffChance:r.playoff/iterations,divisionChance:r.division/iterations,byeChance:r.bye/iterations,projectedWins:r.wins/iterations}))};
 }
+
+// Comparable cumulative totals require a complete league scoreboard in every week.
+export function completeRegularWeeks(archive, season) {
+ const teams=archive.seasons[season].teams,expected=new Set(teams.map(t=>t.manager)),weeks=new Map();
+ for(const g of filterGames(archive,{season,phase:'regular_season'})){if(!weeks.has(g.week))weeks.set(g.week,[]);weeks.get(g.week).push(g);}
+ return new Map([...weeks].filter(([,gs])=>{const names=gs.flatMap(g=>[g.a.manager,g.b.manager]);return names.length===expected.size&&new Set(names).size===expected.size&&names.every(n=>expected.has(n));}));
+}
+export function seasonFinish(archive,season,manager){
+ const s=archive.seasons[season];
+ if(s.status==='in_progress')return 'In progress';
+ if(s.champion_manager===manager)return '1st · Champion';
+ if(s.runner_up_manager===manager)return '2nd · Runner-up';
+ const gs=filterGames(archive,{season,phase:'playoffs',manager});
+ if(!gs.length)return s.champion_manager?'Did not qualify':'Not recorded';
+ const last=gs.slice().sort((a,b)=>b.week-a.week)[0];
+ return String(last.round).toLowerCase()==='semifinal'?'Semifinal exit · place not recorded':String(last.round).toLowerCase()==='quarterfinal'?'Quarterfinal exit · place not recorded':'Playoff qualifier · place not recorded';
+}
+export function cumulativePfRecords(archive,{week=4,season='all',order='highest',query=''}={}){
+ const rows=[],q=query.trim().toLowerCase();week=Number(week);
+ for(const [year,s] of Object.entries(archive.seasons)){
+  if(season!=='all'&&String(season)!==year)continue;
+  const complete=completeRegularWeeks(archive,year);
+  if(!Array.from({length:week},(_,i)=>i+1).every(w=>complete.has(w)))continue;
+  const games=Array.from({length:week},(_,i)=>complete.get(i+1)).flat(),final=standings(archive,year);
+  for(const t of s.teams){if(q&&![t.manager,t.team_name].some(x=>x.toLowerCase().includes(q)))continue;
+   const total=stats(games,t.manager);rows.push({season:year,manager:t.manager,team:t.team_name,...total,pf:Math.round(total.pf*100)/100,finish:seasonFinish(archive,year,t.manager),regularRank:final.find(r=>r.manager===t.manager)?.rank});
+  }
+ }
+ rows.sort((a,b)=>(order==='lowest'?a.pf-b.pf:b.pf-a.pf)||Number(a.season)-Number(b.season)||a.manager.localeCompare(b.manager));
+ return rows.map((r,i)=>({...r,rank:i&&r.pf===rows[i-1].pf?rows.findIndex(x=>x.pf===r.pf)+1:i+1}));
+}
+export function toughOpponentSeasons(archive,{season='all',query='',metric='combined'}={}){
+ const rows=[],q=query.trim().toLowerCase();
+ for(const [year,s] of Object.entries(archive.seasons)){
+  if(season!=='all'&&String(season)!==year)continue;
+  const weeks=completeRegularWeeks(archive,year),byManager=new Map(s.teams.map(t=>[t.manager,{season:year,manager:t.manager,team:t.team_name,highest:0,second:0,combined:0,weeks:weeks.size,details:[],finish:seasonFinish(archive,year,t.manager)}]));
+  for(const [week,gs] of weeks){const scores=gs.flatMap(g=>[g.a,g.b]).map(t=>Math.round(t.score*100));
+   for(const g of gs)for(const [t,opp] of [[g.a,g.b],[g.b,g.a]]){
+    // Competition ranks: 1,1,3 for a tie at the top; all tied teams count.
+    const rank=1+scores.filter(n=>n>Math.round(opp.score*100)).length;
+    if(rank>2)continue;const r=byManager.get(t.manager);r[rank===1?'highest':'second']++;r.combined++;r.details.push({week,opponent:opp.manager,opponentTeam:opp.team_name,score:opp.score,rank,result:outcome(t.score,opp.score)});
+   }
+  }
+  rows.push(...[...byManager.values()].filter(r=>r.weeks&&(!q||[r.manager,r.team].some(x=>x.toLowerCase().includes(q)))));
+ }
+ rows.sort((a,b)=>b[metric]-a[metric]||Number(a.season)-Number(b.season)||a.manager.localeCompare(b.manager));
+ return rows.map((r,i)=>({...r,rank:i&&r[metric]===rows[i-1][metric]?rows.findIndex(x=>x[metric]===r[metric])+1:i+1}));
+}
