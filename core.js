@@ -210,3 +210,14 @@ export function toughOpponentSeasons(archive,{season='all',query='',metric='comb
  rows.sort((a,b)=>b[metric]-a[metric]||Number(a.season)-Number(b.season)||a.manager.localeCompare(b.manager));
  return rows.map((r,i)=>({...r,rank:i&&r[metric]===rows[i-1][metric]?rows.findIndex(x=>x[metric]===r[metric])+1:i+1}));
 }
+
+export function activityAverages(archive,{season='all',query='',sort='avgMoves'}={}){
+ const source=activityRows(archive,season),totals={moves:0,trades:0},groups=new Map(),q=query.trim().toLowerCase();
+ for(const t of source){
+  if(!groups.has(t.manager))groups.set(t.manager,{manager:t.manager,teams:[],seasons:0,moves:0,trades:0,moveSeasons:0,tradeSeasons:0,wins:0,losses:0,ties:0,games:0});
+  const r=groups.get(t.manager);r.teams.push(t.team_name);r.seasons++;for(const key of ['wins','losses','ties','games'])r[key]+=t[key];
+  for(const [key,count] of [['moves','moveSeasons'],['trades','tradeSeasons']])if(Number.isFinite(t[key])){r[key]+=t[key];r[count]++;totals[key]+=t[key];}
+ }
+ const rows=[...groups.values()].filter(r=>!q||[r.manager,...r.teams].some(n=>n.toLowerCase().includes(q))).map(r=>({...r,avgMoves:r.moveSeasons?r.moves/r.moveSeasons:null,avgTrades:r.tradeSeasons?r.trades/r.tradeSeasons:null,moveShare:r.moveSeasons&&totals.moves?r.moves/totals.moves:null,tradeShare:r.tradeSeasons&&totals.trades?r.trades/totals.trades:null,pct:r.games?(r.wins+r.ties/2)/r.games:null}));
+ rows.sort((a,b)=>(b[sort]??-1)-(a[sort]??-1)||a.manager.localeCompare(b.manager));return {rows,totals};
+}
