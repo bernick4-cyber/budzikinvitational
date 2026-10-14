@@ -16,3 +16,5 @@
 
 /* Navy / blue theme: native controls and chart colors follow the dark palette. */
 :root{color-scheme:dark}.sidebar{background:#061020}.season-button.active{color:#fff}nav button.active{color:#fff}.activity-chart text{fill:var(--muted)}.activity-chart line{stroke:var(--line)}.activity-chart circle{fill:#64b5ff;opacity:.8}input::placeholder{color:#9cb2d1}.skip{background:#2c70ca;color:#fff}
+
+.multi-filter{flex:1;min-width:220px}.multi-label{display:block;color:var(--muted);font-size:10px;font-weight:650;margin-bottom:7px}.multi-options{display:flex;flex-wrap:wrap;gap:8px;max-height:190px;overflow-y:auto;padding:12px;background:var(--paper);border:1px solid var(--line);border-radius:9px}.filters .multi-choice{display:flex;align-items:center;gap:7px;min-width:0;flex:0 0 auto;padding:7px 10px;border:1px solid var(--line);border-radius:7px;color:var(--ink);cursor:pointer;font-size:12px}.multi-choice input{min-height:0;width:16px;height:16px;margin:0;accent-color:#58aaff}.multi-choice:has(input:checked){background:#204770;border-color:#58aaff}
