@@ -15,7 +15,7 @@ function plannedPairs(){const season=archive.seasons['2026'],id=new Map((season?
 function savePlan(pairs){weeklyPlans[state.plannerWeek]=pairs;try{window.localStorage?.setItem('budzik-weekly-plans-2026',JSON.stringify(weeklyPlans));planStorageAvailable=!!window.localStorage;}catch{planStorageAvailable=false;}}
 
 const views = ['season','matchups','playoffs','h2h','records','weeklyrecords','highlights','planner','rivalries','divisions','activity','predictions','managers','profile','archive'];
-const defaultState = {view:'season',season:'2015',scope:'all',phase:'all',week:'all',manager:'all',a:'Josh',b:'Taylor',profile:'Josh',q:'',sort:'wins',category:'high_team',plannerWeek:'1',minimum:'3',order:'best',forecastWeek:'6',startRecord:'0–5–0',recordWeek:'5',recordLimit:'10',pfOrder:'highest',opponentMetric:'combined',activitySort:'avgMoves',historyRecord:'all',historyYears:'all'};
+const defaultState = {view:'predictions',season:'2015',scope:'all',phase:'all',week:'all',manager:'all',a:'Josh',b:'Taylor',profile:'Josh',q:'',sort:'wins',category:'high_team',plannerWeek:'1',minimum:'3',order:'best',forecastWeek:'6',startRecord:'0–5–0',recordWeek:'5',recordLimit:'10',pfOrder:'highest',opponentMetric:'combined',activitySort:'avgMoves',historyRecord:'all',historyYears:'all'};
 
 function currentWeek(){return Math.max(0,...(archive.seasons['2026'].completed_weeks||[]));}
 function readState() {
