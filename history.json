@@ -13718,8 +13718,8 @@
           "team_id": "1",
           "manager": "Craig",
           "team_name": "The Ants Marching",
-          "moves": 3,
-          "waiver_priority": 8,
+          "moves": 5,
+          "waiver_priority": 6,
           "trades": null,
           "division": "Division 1"
         },
@@ -13727,8 +13727,8 @@
           "team_id": "2",
           "manager": "Michael",
           "team_name": "Big Butler Bids",
-          "moves": 3,
-          "waiver_priority": 10,
+          "moves": 6,
+          "waiver_priority": 2,
           "trades": null,
           "division": "Division 3"
         },
@@ -13736,8 +13736,8 @@
           "team_id": "3",
           "manager": "Ed",
           "team_name": "Fu¢ked Again",
-          "moves": 3,
-          "waiver_priority": 5,
+          "moves": 5,
+          "waiver_priority": 7,
           "trades": null,
           "division": "Division 2"
         },
@@ -13745,8 +13745,8 @@
           "team_id": "4",
           "manager": "Frank",
           "team_name": "I Be Tuten",
-          "moves": 1,
-          "waiver_priority": 1,
+          "moves": 2,
+          "waiver_priority": 5,
           "trades": null,
           "division": "Division 1"
         },
@@ -13754,8 +13754,8 @@
           "team_id": "5",
           "manager": "Josh",
           "team_name": "Phony Handshakes",
-          "moves": 3,
-          "waiver_priority": 6,
+          "moves": 8,
+          "waiver_priority": 3,
           "trades": null,
           "division": "Division 3"
         },
@@ -13763,8 +13763,8 @@
           "team_id": "6",
           "manager": "Dave",
           "team_name": "Balls Deep",
-          "moves": 2,
-          "waiver_priority": 3,
+          "moves": 4,
+          "waiver_priority": 1,
           "trades": null,
           "division": "Division 2"
         },
@@ -13772,8 +13772,8 @@
           "team_id": "7",
           "manager": "Paul",
           "team_name": "Space Dogs",
-          "moves": 10,
-          "waiver_priority": 7,
+          "moves": 15,
+          "waiver_priority": 10,
           "trades": null,
           "division": "Division 3"
         },
@@ -13781,8 +13781,8 @@
           "team_id": "8",
           "manager": "Ryan",
           "team_name": "The Blockheads Marching",
-          "moves": 2,
-          "waiver_priority": 4,
+          "moves": 7,
+          "waiver_priority": 11,
           "trades": null,
           "division": "Division 2"
         },
@@ -13790,8 +13790,8 @@
           "team_id": "9",
           "manager": "Mike",
           "team_name": "Team Fluff",
-          "moves": 2,
-          "waiver_priority": 12,
+          "moves": 4,
+          "waiver_priority": 9,
           "trades": null,
           "division": "Division 1"
         },
@@ -13799,8 +13799,8 @@
           "team_id": "10",
           "manager": "Nick",
           "team_name": "Ricky Kicks",
-          "moves": 2,
-          "waiver_priority": 11,
+          "moves": 3,
+          "waiver_priority": 8,
           "trades": null,
           "division": "Division 2"
         },
@@ -13808,8 +13808,8 @@
           "team_id": "11",
           "manager": "Bruce",
           "team_name": "The Storm",
-          "moves": 5,
-          "waiver_priority": 9,
+          "moves": 7,
+          "waiver_priority": 12,
           "trades": null,
           "division": "Division 3"
         },
@@ -13817,8 +13817,8 @@
           "team_id": "12",
           "manager": "Mark",
           "team_name": "wacky waving arms",
-          "moves": 5,
-          "waiver_priority": 2,
+          "moves": 8,
+          "waiver_priority": 4,
           "trades": null,
           "division": "Division 1"
         }
@@ -14273,281 +14273,329 @@
             "9",
             "10"
           ]
-        }
-      ],
-      "remaining_schedule": [
+        },
         {
           "week": 6,
           "team_id": "5",
           "opponent_id": "7",
           "rivalry_week": true,
-          "source_week_marker": "*"
-        },
-        {
-          "week": 7,
-          "team_id": "5",
-          "opponent_id": "3",
-          "rivalry_week": false,
-          "source_week_marker": ""
-        },
-        {
-          "week": 8,
-          "team_id": "5",
-          "opponent_id": "11",
-          "rivalry_week": true,
-          "source_week_marker": "*"
-        },
-        {
-          "week": 9,
-          "team_id": "5",
-          "opponent_id": "9",
-          "rivalry_week": false,
-          "source_week_marker": ""
-        },
-        {
-          "week": 10,
-          "team_id": "5",
-          "opponent_id": "10",
-          "rivalry_week": false,
-          "source_week_marker": ""
-        },
-        {
-          "week": 11,
-          "team_id": "5",
-          "opponent_id": "4",
-          "rivalry_week": false,
-          "source_week_marker": ""
-        },
-        {
-          "week": 12,
-          "team_id": "5",
-          "opponent_id": "7",
-          "rivalry_week": true,
-          "source_week_marker": "*"
-        },
-        {
-          "week": 13,
-          "team_id": "5",
-          "opponent_id": "8",
-          "rivalry_week": false,
-          "source_week_marker": ""
-        },
-        {
-          "week": 14,
-          "team_id": "5",
-          "opponent_id": "2",
-          "rivalry_week": true,
-          "source_week_marker": "*"
+          "source_week_marker": "*",
+          "score": 136.2,
+          "opponent_score": 86.05,
+          "phase": "regular_season",
+          "result": "Win",
+          "confirmed_by_team_ids": [
+            "5",
+            "7"
+          ]
         },
         {
           "week": 6,
           "team_id": "1",
           "opponent_id": "9",
           "rivalry_week": true,
-          "source_week_marker": "*"
-        },
-        {
-          "week": 7,
-          "team_id": "1",
-          "opponent_id": "11",
-          "rivalry_week": false,
-          "source_week_marker": ""
-        },
-        {
-          "week": 8,
-          "team_id": "1",
-          "opponent_id": "12",
-          "rivalry_week": true,
-          "source_week_marker": "*"
-        },
-        {
-          "week": 9,
-          "team_id": "1",
-          "opponent_id": "8",
-          "rivalry_week": false,
-          "source_week_marker": ""
-        },
-        {
-          "week": 10,
-          "team_id": "1",
-          "opponent_id": "2",
-          "rivalry_week": false,
-          "source_week_marker": ""
-        },
-        {
-          "week": 11,
-          "team_id": "1",
-          "opponent_id": "10",
-          "rivalry_week": false,
-          "source_week_marker": ""
-        },
-        {
-          "week": 12,
-          "team_id": "1",
-          "opponent_id": "9",
-          "rivalry_week": true,
-          "source_week_marker": "*"
-        },
-        {
-          "week": 13,
-          "team_id": "1",
-          "opponent_id": "7",
-          "rivalry_week": false,
-          "source_week_marker": ""
-        },
-        {
-          "week": 14,
-          "team_id": "1",
-          "opponent_id": "4",
-          "rivalry_week": true,
-          "source_week_marker": "*"
+          "source_week_marker": "*",
+          "score": 110.95,
+          "opponent_score": 112.9,
+          "phase": "regular_season",
+          "result": "Loss",
+          "confirmed_by_team_ids": [
+            "1",
+            "9"
+          ]
         },
         {
           "week": 6,
           "team_id": "2",
           "opponent_id": "11",
           "rivalry_week": true,
-          "source_week_marker": "*"
-        },
-        {
-          "week": 7,
-          "team_id": "2",
-          "opponent_id": "9",
-          "rivalry_week": false,
-          "source_week_marker": ""
-        },
-        {
-          "week": 8,
-          "team_id": "2",
-          "opponent_id": "7",
-          "rivalry_week": true,
-          "source_week_marker": "*"
-        },
-        {
-          "week": 9,
-          "team_id": "2",
-          "opponent_id": "6",
-          "rivalry_week": false,
-          "source_week_marker": ""
-        },
-        {
-          "week": 11,
-          "team_id": "2",
-          "opponent_id": "3",
-          "rivalry_week": false,
-          "source_week_marker": ""
-        },
-        {
-          "week": 12,
-          "team_id": "2",
-          "opponent_id": "11",
-          "rivalry_week": true,
-          "source_week_marker": "*"
-        },
-        {
-          "week": 13,
-          "team_id": "2",
-          "opponent_id": "12",
-          "rivalry_week": false,
-          "source_week_marker": ""
+          "source_week_marker": "*",
+          "score": 93.85,
+          "opponent_score": 113.1,
+          "phase": "regular_season",
+          "result": "Loss",
+          "confirmed_by_team_ids": [
+            "2",
+            "11"
+          ]
         },
         {
           "week": 6,
           "team_id": "3",
           "opponent_id": "8",
           "rivalry_week": true,
-          "source_week_marker": "*"
-        },
-        {
-          "week": 8,
-          "team_id": "3",
-          "opponent_id": "6",
-          "rivalry_week": true,
-          "source_week_marker": "*"
-        },
-        {
-          "week": 9,
-          "team_id": "3",
-          "opponent_id": "7",
-          "rivalry_week": false,
-          "source_week_marker": ""
-        },
-        {
-          "week": 10,
-          "team_id": "3",
-          "opponent_id": "4",
-          "rivalry_week": false,
-          "source_week_marker": ""
-        },
-        {
-          "week": 12,
-          "team_id": "3",
-          "opponent_id": "8",
-          "rivalry_week": true,
-          "source_week_marker": "*"
-        },
-        {
-          "week": 13,
-          "team_id": "3",
-          "opponent_id": "9",
-          "rivalry_week": false,
-          "source_week_marker": ""
-        },
-        {
-          "week": 14,
-          "team_id": "3",
-          "opponent_id": "10",
-          "rivalry_week": true,
-          "source_week_marker": "*"
+          "source_week_marker": "*",
+          "score": 82.55,
+          "opponent_score": 101.15,
+          "phase": "regular_season",
+          "result": "Loss",
+          "confirmed_by_team_ids": [
+            "3",
+            "8"
+          ]
         },
         {
           "week": 6,
           "team_id": "4",
           "opponent_id": "12",
           "rivalry_week": true,
-          "source_week_marker": "*"
-        },
-        {
-          "week": 7,
-          "team_id": "4",
-          "opponent_id": "10",
-          "rivalry_week": false,
-          "source_week_marker": ""
-        },
-        {
-          "week": 8,
-          "team_id": "4",
-          "opponent_id": "9",
-          "rivalry_week": true,
-          "source_week_marker": "*"
-        },
-        {
-          "week": 9,
-          "team_id": "4",
-          "opponent_id": "11",
-          "rivalry_week": false,
-          "source_week_marker": ""
-        },
-        {
-          "week": 12,
-          "team_id": "4",
-          "opponent_id": "12",
-          "rivalry_week": true,
-          "source_week_marker": "*"
-        },
-        {
-          "week": 13,
-          "team_id": "4",
-          "opponent_id": "6",
-          "rivalry_week": false,
-          "source_week_marker": ""
+          "source_week_marker": "*",
+          "score": 126.4,
+          "opponent_score": 117.7,
+          "phase": "regular_season",
+          "result": "Win",
+          "confirmed_by_team_ids": [
+            "4",
+            "12"
+          ]
         },
         {
           "week": 6,
           "team_id": "6",
           "opponent_id": "10",
           "rivalry_week": true,
+          "source_week_marker": "*",
+          "score": 132.0,
+          "opponent_score": 137.5,
+          "phase": "regular_season",
+          "result": "Loss",
+          "confirmed_by_team_ids": [
+            "6",
+            "10"
+          ]
+        }
+      ],
+      "remaining_schedule": [
+        {
+          "week": 7,
+          "team_id": "5",
+          "opponent_id": "3",
+          "rivalry_week": false,
+          "source_week_marker": ""
+        },
+        {
+          "week": 8,
+          "team_id": "5",
+          "opponent_id": "11",
+          "rivalry_week": true,
           "source_week_marker": "*"
+        },
+        {
+          "week": 9,
+          "team_id": "5",
+          "opponent_id": "9",
+          "rivalry_week": false,
+          "source_week_marker": ""
+        },
+        {
+          "week": 10,
+          "team_id": "5",
+          "opponent_id": "10",
+          "rivalry_week": false,
+          "source_week_marker": ""
+        },
+        {
+          "week": 11,
+          "team_id": "5",
+          "opponent_id": "4",
+          "rivalry_week": false,
+          "source_week_marker": ""
+        },
+        {
+          "week": 12,
+          "team_id": "5",
+          "opponent_id": "7",
+          "rivalry_week": true,
+          "source_week_marker": "*"
+        },
+        {
+          "week": 13,
+          "team_id": "5",
+          "opponent_id": "8",
+          "rivalry_week": false,
+          "source_week_marker": ""
+        },
+        {
+          "week": 14,
+          "team_id": "5",
+          "opponent_id": "2",
+          "rivalry_week": true,
+          "source_week_marker": "*"
+        },
+        {
+          "week": 7,
+          "team_id": "1",
+          "opponent_id": "11",
+          "rivalry_week": false,
+          "source_week_marker": ""
+        },
+        {
+          "week": 8,
+          "team_id": "1",
+          "opponent_id": "12",
+          "rivalry_week": true,
+          "source_week_marker": "*"
+        },
+        {
+          "week": 9,
+          "team_id": "1",
+          "opponent_id": "8",
+          "rivalry_week": false,
+          "source_week_marker": ""
+        },
+        {
+          "week": 10,
+          "team_id": "1",
+          "opponent_id": "2",
+          "rivalry_week": false,
+          "source_week_marker": ""
+        },
+        {
+          "week": 11,
+          "team_id": "1",
+          "opponent_id": "10",
+          "rivalry_week": false,
+          "source_week_marker": ""
+        },
+        {
+          "week": 12,
+          "team_id": "1",
+          "opponent_id": "9",
+          "rivalry_week": true,
+          "source_week_marker": "*"
+        },
+        {
+          "week": 13,
+          "team_id": "1",
+          "opponent_id": "7",
+          "rivalry_week": false,
+          "source_week_marker": ""
+        },
+        {
+          "week": 14,
+          "team_id": "1",
+          "opponent_id": "4",
+          "rivalry_week": true,
+          "source_week_marker": "*"
+        },
+        {
+          "week": 7,
+          "team_id": "2",
+          "opponent_id": "9",
+          "rivalry_week": false,
+          "source_week_marker": ""
+        },
+        {
+          "week": 8,
+          "team_id": "2",
+          "opponent_id": "7",
+          "rivalry_week": true,
+          "source_week_marker": "*"
+        },
+        {
+          "week": 9,
+          "team_id": "2",
+          "opponent_id": "6",
+          "rivalry_week": false,
+          "source_week_marker": ""
+        },
+        {
+          "week": 11,
+          "team_id": "2",
+          "opponent_id": "3",
+          "rivalry_week": false,
+          "source_week_marker": ""
+        },
+        {
+          "week": 12,
+          "team_id": "2",
+          "opponent_id": "11",
+          "rivalry_week": true,
+          "source_week_marker": "*"
+        },
+        {
+          "week": 13,
+          "team_id": "2",
+          "opponent_id": "12",
+          "rivalry_week": false,
+          "source_week_marker": ""
+        },
+        {
+          "week": 8,
+          "team_id": "3",
+          "opponent_id": "6",
+          "rivalry_week": true,
+          "source_week_marker": "*"
+        },
+        {
+          "week": 9,
+          "team_id": "3",
+          "opponent_id": "7",
+          "rivalry_week": false,
+          "source_week_marker": ""
+        },
+        {
+          "week": 10,
+          "team_id": "3",
+          "opponent_id": "4",
+          "rivalry_week": false,
+          "source_week_marker": ""
+        },
+        {
+          "week": 12,
+          "team_id": "3",
+          "opponent_id": "8",
+          "rivalry_week": true,
+          "source_week_marker": "*"
+        },
+        {
+          "week": 13,
+          "team_id": "3",
+          "opponent_id": "9",
+          "rivalry_week": false,
+          "source_week_marker": ""
+        },
+        {
+          "week": 14,
+          "team_id": "3",
+          "opponent_id": "10",
+          "rivalry_week": true,
+          "source_week_marker": "*"
+        },
+        {
+          "week": 7,
+          "team_id": "4",
+          "opponent_id": "10",
+          "rivalry_week": false,
+          "source_week_marker": ""
+        },
+        {
+          "week": 8,
+          "team_id": "4",
+          "opponent_id": "9",
+          "rivalry_week": true,
+          "source_week_marker": "*"
+        },
+        {
+          "week": 9,
+          "team_id": "4",
+          "opponent_id": "11",
+          "rivalry_week": false,
+          "source_week_marker": ""
+        },
+        {
+          "week": 12,
+          "team_id": "4",
+          "opponent_id": "12",
+          "rivalry_week": true,
+          "source_week_marker": "*"
+        },
+        {
+          "week": 13,
+          "team_id": "4",
+          "opponent_id": "6",
+          "rivalry_week": false,
+          "source_week_marker": ""
         },
         {
           "week": 7,
@@ -14676,7 +14724,8 @@
         2,
         3,
         4,
-        5
+        5,
+        6
       ],
       "status": "in_progress",
       "yahoo_league_id": 941396,
@@ -14926,11 +14975,186 @@
         "2026 final results through Week 5, cross-checked against all 12 schedules and Yahoo cumulative standings.",
         "Weeks 6–14 remaining schedule is supplied. Week 5 finals supplied October 13, 2026; projections excluded.",
         "Division winners qualify automatically; three best remaining records earn wild cards. Top two division winners receive byes. Ties break on points for.",
-        "Moves are through Week 4; 2026 trades not supplied. Current division leaders are not awarded division titles.",
         "Asterisks mean Rivalry Week, confirmed by Josh.",
         "PF-average playoff simulation enabled October 10, 2026. Historical 2017–2025 four-game starting records shown as empirical reference rates. Player-based model remains paused.",
-        "Six Week 5 final matchups added October 13, 2026. Activity counts and roster snapshots remain as originally supplied."
-      ]
+        "Six Week 5 final matchups added October 13, 2026. Activity counts and roster snapshots remain as originally supplied.",
+        "Week 6 scores and standings supplied October 21, 2026, cross-checked for overall record, PF, PA and division record. Moves and waiver priority through Week 6; current trade counts not supplied. Yahoo display ranks saved separately from calculated standings."
+      ],
+      "standings_snapshot": {
+        "through_week": 6,
+        "supplied_date": "2026-10-21",
+        "teams": [
+          {
+            "team_id": "9",
+            "manager": "Mike",
+            "yahoo_rank": 1,
+            "wins": 6,
+            "losses": 0,
+            "ties": 0,
+            "division_record": "3-0-0",
+            "pf": 890.05,
+            "pa": 654.05,
+            "streak": "W-6",
+            "waiver_priority": 9,
+            "moves": 4
+          },
+          {
+            "team_id": "1",
+            "manager": "Craig",
+            "yahoo_rank": 8,
+            "wins": 2,
+            "losses": 4,
+            "ties": 0,
+            "division_record": "2-1-0",
+            "pf": 681.55,
+            "pa": 743.9,
+            "streak": "L-3",
+            "waiver_priority": 6,
+            "moves": 5
+          },
+          {
+            "team_id": "4",
+            "manager": "Frank",
+            "yahoo_rank": 10,
+            "wins": 2,
+            "losses": 4,
+            "ties": 0,
+            "division_record": "1-2-0",
+            "pf": 617.2,
+            "pa": 709.05,
+            "streak": "W-2",
+            "waiver_priority": 5,
+            "moves": 2
+          },
+          {
+            "team_id": "12",
+            "manager": "Mark",
+            "yahoo_rank": 12,
+            "wins": 0,
+            "losses": 6,
+            "ties": 0,
+            "division_record": "0-3-0",
+            "pf": 681.8,
+            "pa": 838.75,
+            "streak": "L-6",
+            "waiver_priority": 4,
+            "moves": 8
+          },
+          {
+            "team_id": "10",
+            "manager": "Nick",
+            "yahoo_rank": 3,
+            "wins": 4,
+            "losses": 2,
+            "ties": 0,
+            "division_record": "3-0-0",
+            "pf": 774.25,
+            "pa": 780.3,
+            "streak": "W-1",
+            "waiver_priority": 8,
+            "moves": 3
+          },
+          {
+            "team_id": "3",
+            "manager": "Ed",
+            "yahoo_rank": 4,
+            "wins": 4,
+            "losses": 2,
+            "ties": 0,
+            "division_record": "1-2-0",
+            "pf": 789.95,
+            "pa": 646.05,
+            "streak": "L-1",
+            "waiver_priority": 7,
+            "moves": 5
+          },
+          {
+            "team_id": "8",
+            "manager": "Ryan",
+            "yahoo_rank": 7,
+            "wins": 3,
+            "losses": 3,
+            "ties": 0,
+            "division_record": "2-1-0",
+            "pf": 654.6,
+            "pa": 790.1,
+            "streak": "W-1",
+            "waiver_priority": 11,
+            "moves": 7
+          },
+          {
+            "team_id": "6",
+            "manager": "Dave",
+            "yahoo_rank": 9,
+            "wins": 2,
+            "losses": 4,
+            "ties": 0,
+            "division_record": "0-3-0",
+            "pf": 661.5,
+            "pa": 688.65,
+            "streak": "L-1",
+            "waiver_priority": 1,
+            "moves": 4
+          },
+          {
+            "team_id": "5",
+            "manager": "Josh",
+            "yahoo_rank": 2,
+            "wins": 6,
+            "losses": 0,
+            "ties": 0,
+            "division_record": "3-0-0",
+            "pf": 737.45,
+            "pa": 635.5,
+            "streak": "W-6",
+            "waiver_priority": 3,
+            "moves": 8
+          },
+          {
+            "team_id": "2",
+            "manager": "Michael",
+            "yahoo_rank": 5,
+            "wins": 3,
+            "losses": 3,
+            "ties": 0,
+            "division_record": "1-2-0",
+            "pf": 775.7,
+            "pa": 690.2,
+            "streak": "L-1",
+            "waiver_priority": 2,
+            "moves": 6
+          },
+          {
+            "team_id": "11",
+            "manager": "Bruce",
+            "yahoo_rank": 6,
+            "wins": 3,
+            "losses": 3,
+            "ties": 0,
+            "division_record": "2-1-0",
+            "pf": 704.35,
+            "pa": 655.8,
+            "streak": "W-1",
+            "waiver_priority": 12,
+            "moves": 7
+          },
+          {
+            "team_id": "7",
+            "manager": "Paul",
+            "yahoo_rank": 11,
+            "wins": 1,
+            "losses": 5,
+            "ties": 0,
+            "division_record": "0-3-0",
+            "pf": 603.1,
+            "pa": 739.15,
+            "streak": "L-4",
+            "waiver_priority": 10,
+            "moves": 15
+          }
+        ]
+      },
+      "activity_through_week": 6
     }
   },
   "workbook_preferences": {
@@ -14943,5 +15167,5 @@
     "website_update_mode": "on_request",
     "note": "Record incoming schedules quickly; deploy accumulated website updates only when the user asks to update the site."
   },
-  "updated_at": "2026-10-13"
+  "updated_at": "2026-10-21"
 }

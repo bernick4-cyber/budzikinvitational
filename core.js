@@ -221,3 +221,28 @@ export function activityAverages(archive,{season='all',query='',sort='avgMoves'}
  const rows=[...groups.values()].filter(r=>!q||[r.manager,...r.teams].some(n=>n.toLowerCase().includes(q))).map(r=>({...r,avgMoves:r.moveSeasons?r.moves/r.moveSeasons:null,avgTrades:r.tradeSeasons?r.trades/r.tradeSeasons:null,moveShare:r.moveSeasons&&totals.moves?r.moves/totals.moves:null,tradeShare:r.tradeSeasons&&totals.trades?r.trades/totals.trades:null,pct:r.games?(r.wins+r.ties/2)/r.games:null}));
  rows.sort((a,b)=>(b[sort]??-1)-(a[sort]??-1)||a.manager.localeCompare(b.manager));return {rows,totals};
 }
+
+export function sortRecordHistory(archive,rows,key='season',direction='asc'){
+ const enriched=rows.map(r=>({...r,finalStats:stats(filterGames(archive,{season:r.season,phase:'regular_season'}),r.manager)}));
+ const finishOrder=r=>r.finish.startsWith('1st')?1:r.finish.startsWith('2nd')?2:r.finish.startsWith('Semifinal')?3:r.finish.startsWith('Quarterfinal')?4:r.finish.startsWith('Playoff qualifier')?5:r.finish==='Did not qualify'?6:r.finish==='In progress'?8:7;
+ const compareStats=(a,b)=>(a.pct??-1)-(b.pct??-1)||a.wins-b.wins||a.ties-b.ties;
+ const compare=(a,b)=>key==='manager'?a.manager.localeCompare(b.manager)||a.team.localeCompare(b.team):key==='record'?compareStats(a,b):key==='pf'?a.pf-b.pf:key==='finalRecord'?compareStats(a.finalStats,b.finalStats):key==='regularRank'?(a.regularRank??999)-(b.regularRank??999):key==='finish'?finishOrder(a)-finishOrder(b):Number(a.season)-Number(b.season);
+ return enriched.sort((a,b)=>(direction==='desc'?-1:1)*compare(a,b)||Number(a.season)-Number(b.season)||a.manager.localeCompare(b.manager));
+}
+
+// Editorial power index, not a probability: 45% season scoring, 35% all-play,
+// 20% recent scoring. Percentile components share a 0–1 scale.
+export function powerRankings(archive,{season='2026',week=null}={}){
+ const complete=completeRegularWeeks(archive,season),weeks=[...complete.keys()].filter(w=>week==null||w<=Number(week)).sort((a,b)=>a-b);
+ if(!weeks.length)return [];
+ const games=weeks.flatMap(w=>complete.get(w)),last=weeks.slice(-3),teams=archive.seasons[season].teams;
+ const rows=teams.map(t=>{const total=stats(games,t.manager),recent=stats(last.flatMap(w=>complete.get(w)),t.manager);let wins=0,ties=0,comparisons=0;
+  for(const w of weeks){const scores=complete.get(w).flatMap(g=>[g.a,g.b]),own=scores.find(s=>s.manager===t.manager);for(const other of scores){if(other.manager===t.manager)continue;comparisons++;const a=Math.round(own.score*100),b=Math.round(other.score*100);if(a>b)wins++;else if(a===b)ties++;}}
+  return {...t,...total,recentAvg:recent.avg,recentWeeks:last.length,allPlayWins:wins,allPlayTies:ties,allPlayGames:comparisons,allPlayRate:(wins+ties/2)/comparisons,throughWeek:weeks.at(-1)};
+ });
+ const percentile=(r,key)=>rows.length<2?.5:rows.filter(o=>o!==r).reduce((n,o)=>n+(Math.round(r[key]*100)>Math.round(o[key]*100)?1:Math.round(r[key]*100)===Math.round(o[key]*100)?.5:0),0)/(rows.length-1);
+ for(const r of rows){r.scoringPercentile=percentile(r,'avg');r.recentPercentile=percentile(r,'recentAvg');r.powerScore=100*(.45*r.scoringPercentile+.35*r.allPlayRate+.20*r.recentPercentile);}
+ rows.sort((a,b)=>b.powerScore-a.powerScore||b.pf-a.pf||a.manager.localeCompare(b.manager));
+ rows.forEach((r,i)=>{r.powerRank=i&&Math.abs(r.powerScore-rows[i-1].powerScore)<1e-9?rows[i-1].powerRank:i+1;});
+ return rows;
+}

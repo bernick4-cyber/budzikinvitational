@@ -1,1 +1,7 @@
-Upload the six code/style files to GitHub replacing previous versions and commit. Keep app.py and history.json. Weekly season records now uses checkbox lists for Years and W-L-T records. Select multiple options in both lists simultaneously; the table includes every matching record from the checked years. Check All to reset one list. No Ctrl/Command key needed. Includes all earlier feature code and navy/blue colors.
+Extract this ZIP, then upload all nine website files to the existing GitHub repository root, replacing old versions, and commit. Do not upload the ZIP or enclosing folder. Keep existing favicon.svg and Excel file. Reboot Streamlit after committing if changes do not appear. Main file remains app.py.
+
+Includes 2026 Weeks 1-6 final results (36 matchups), all supplied standings through Week 6, updated moves and waiver priorities, and 48 remaining fixtures for Weeks 7-14. Records, PF, PA and division records match all twelve supplied teams. Yahoo display ranks are saved separately; calculated standings still use overall record then PF. Current trade counts remain unknown.
+
+New Power rankings tab: 45% season-average scoring percentile, 35% all-play win rate, 20% recent-three-game scoring percentile. All-play compares every team with all other weekly scorers, with half credit for ties. Index ranges 0-100 and is not a probability; weights are editorial, not validated forecasts. Select a past week to see historical power rankings and changes. Individual explanations show contributions and recent form. Player projections and injuries are not included.
+
+Includes all earlier checkbox filters, sortable record lookup, activity averages, navy/blue theme and playoff-predictions landing page. 43 checks passed.
