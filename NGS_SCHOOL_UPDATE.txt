@@ -1,0 +1,41 @@
+NGS SCORES AND COLLEGE PATHWAYS UPDATE
+
+Upload these FOUR Python files to the top level of your existing GitHub repository:
+app.py — replace
+research_lab.py — replace
+model_lab.py — replace
+school_lab.py — new
+
+Keep all existing data, presentation.py, nfl_success.py, extra_views.py,
+data_access.py, nfl_slant_starter.py and requirements.txt. No extra packages or data uploads.
+
+WHAT IS NEW
+1. Athleticism, college production, and overall prospect scores are selectable in
+Research Lab comparisons, correlation rankings, percentile charts and similar prospects.
+2. Model Lab has NGS baseline presets: athleticism + college production, or overall
+prospect score alone. Test additional variables against these baselines.
+3. College pathways compares schools or conferences within a position and draft classes.
+Choose an NFL outcome, minimum outcome observations and minimum players per group.
+4. The adjusted tab shows player-held-out predictions from your selected baseline
+and each school's average outcome above that baseline. School is not used as a predictor.
+5. Plain-language explanations distinguish Combine IQ (a dashboard) from NGS scores,
+app sample percentiles, official NFL forecasts, and model-derived expectations.
+
+START HERE
+College pathways > WR > all classes > separation > 20 observations > 3 players.
+If school samples are too sparse, choose Conference. Open the adjusted tab to compare
+outcomes with a baseline using athleticism and college production scores.
+In Model Lab choose the NGS athleticism + college production baseline, then add a test.
+
+INTERPRETATION
+All NFL comparisons here use rookie regular-season outcomes. Source data includes selected
+prospects, not entire college output. No causal school-development claims. Player-held-out
+checks are exploratory after variable selection, not independent validation. Score snapshot
+and model training history are unverified. Overall prospect score overlaps with its components.
+Missing scores/outcomes are excluded and counted. Outcome averages give each player equal weight.
+School/conference labels are used as supplied, without assigning value across transfers.
+
+VALIDATION
+Syntax checks passed. Actual-data checks verified NGS coverage, inclusion in rankings,
+held-out prediction calculations, school counts, and faster-is-positive residual direction.
+Streamlit hosting/visual rendering has not been tested in this environment.
