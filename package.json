@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "test": "node --test checks/*.test.mjs",
-    "build": "python build.py"
+    "build": "python build.py",
+    "dev": "python preview_server.py"
   }
 }

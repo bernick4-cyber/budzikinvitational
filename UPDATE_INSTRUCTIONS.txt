@@ -1,0 +1,28 @@
+BUDZIK INVITATIONAL — WEEK 9 ANALYTICS UPDATE
+
+1. Download and extract this ZIP.
+2. Open index.html to preview the entire site locally.
+3. In bernick4-cyber/budzikinvitational, choose Add file > Upload files.
+4. Upload the extracted contents to the repository root and commit the update.
+   Replace files with the same names. Upload checks as a folder if desired.
+   Do not upload the ZIP itself or put the site inside another folder.
+5. GitHub Pages will publish from your existing configured branch.
+
+Required changed/new website files:
+  index.html, bundle.js, style.css, history.json
+Editable source and support files:
+  app.js, core.js, analytics.js, analytics-ui.js, index.template.html,
+  build.py, package.json, README.md, checks/analytics.test.mjs
+
+All Weeks 1–9 results are included. FLEX combines both FLEX starting slots
+and is excluded from the RB, WR and TE totals.
+
+Trade pools start with Week 9 starters, not complete current rosters.
+Add bench/replacement players and edit expected PPG. Player defaults are
+observed-start averages, including zeros, not rest-of-season forecasts.
+
+Simulation uses the existing Weeks 10–14 fantasy schedule and saved
+qualification rules. Championship estimates assume three single-week
+rounds in Weeks 15–17 with reseeding. See the model notes in the app.
+
+This package prepares the update; it does not itself publish to GitHub.
