@@ -1,0 +1,27 @@
+DEFENSIVE LINE LAB UPDATE
+
+Upload the following files to the root of bernick4-cyber/bigdatabowl2027:
+  app.py                    (replace)
+  presentation.py           (replace)
+  README.md                 (replace)
+  defensive_line.py         (new)
+  defensive_line_data.py    (new)
+  test_defensive_line.py    (optional validation file)
+
+Keep the current data folder and all other application files. This package
+is an update, not a standalone replacement repository. No requirements change
+is needed. After committing, let Streamlit redeploy and open Defensive Line Lab.
+
+Includes coverage, player comparisons, combine relationships, and a draft-class
+test. Select measurements and click Evaluate 2025 draft class to run the test.
+Training uses 2023–2024. All models use the same complete player sample.
+
+Outcome: mean recorded get-off in rookie regular-season, non-nullified plays.
+Default minimum: 20 recorded get-off observations. Sacks are descriptive totals,
+not opportunity-adjusted rates. Edge = DE; interior = DT or NT. OLB excluded.
+
+Results are exploratory. Inspecting 2025 and changing inputs means it is no
+longer an untouched final test. NGS score timing and training cohorts have not
+been verified. Faster get-off alone does not establish better defensive play.
+
+Validation command: python -m unittest test_defensive_line.py

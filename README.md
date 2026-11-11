@@ -1,49 +1,56 @@
-# Budzik Invitational
+# NFL Prospect Lab — Big Data Bowl 2027
 
-A standalone league history website with searchable all-time totals, regular-season and playoff filters, records, head-to-head comparisons, division titles, moves/trades analysis, weekly matchup planning, and playoff estimates.
+Streamlit workspace for combine measurements and NFL outcomes. The default
+Defensive Line Lab studies whether combine measurements add information about
+rookie get-off beyond the supplied NGS athleticism score.
 
-## Publish free with GitHub Pages
+## Defensive Line Lab
 
-1. Create a public GitHub repository named `budzik-invitational`.
-2. Extract this ZIP. Upload the contents directly to the repository root, including `index.html`, `bundle.js`, `style.css`, and the data files. Do not upload the ZIP itself or place everything inside another folder.
-3. Open repository Settings → Pages.
-4. Select Deploy from a branch, branch `main`, folder `/ (root)`, and Save.
-5. GitHub will show your public site URL, usually `https://YOUR-USERNAME.github.io/budzik-invitational/`.
+- DE, DT and NT prospects; OLB excluded. Edge = DE; interior = DT or NT.
+- Coverage by draft class and group, including missing measurements.
+- Player comparisons with get-off observations, recorded sacks and measurements.
+- Linear and rank correlations with position-colored scatterplots.
+- Train on 2023–2024, evaluate on 2025. Preprocessing uses training players only.
+- All compared models use the same complete-player sample, with equal player
+  weights and no imputation. Position group is included when both occur.
+- CSV downloads for eligible players and evaluated predictions.
 
-No ChatGPT subscription, API key, npm installation, or server is needed. GitHub Pages supports free hosting for public repositories.
+Default comparison adds the 10-yard split to athleticism and position group.
+Get-off is averaged over supplied rookie regular-season, non-nullified plays.
+Sacks are descriptive recorded totals, not opportunity-adjusted sack rates.
+Faster get-off alone does not establish better defensive play. Position labels
+are roster labels, not play alignment. Small samples and role/context differences
+limit interpretation. Inspecting 2025 outcomes and trying specifications makes
+that evaluation exploratory. NGS score timing and training cohorts are unverified.
 
-## Open locally
+## Other pages
 
-Double-click `index.html` after extracting the ZIP. Keep the files together. The archive is embedded in the page so it also works without a server.
+Research Lab, College pathways, Model Lab, NFL Success, Combine slants,
+Player profiles, NFL game tracking and Data coverage remain available.
 
-## Update the site
+## Included data
 
-- Edit `history.json` to change league data.
-- Edit `app.js`, `core.js`, `style.css`, or `index.template.html` to change behavior or appearance.
-- Run `python build.py` (or `python3 build.py`) to regenerate `index.html` and `bundle.js`.
-- Upload the changed source and generated files to GitHub. Pages publishes the new commit automatically.
-- Optional verification: with Node.js installed, run `node --test checks/*.test.mjs`.
+The manifest includes nine datasets: players, combine results, combine tracking,
+player-play data, games, career successes and NFL tracking for 2023, 2024 and 2025.
+There are 510 prospects across the 2023–2025 draft classes. Files are gzip
+compressed and some are split into parts. Keep the complete data folder and
+manifest intact; do not extract or rename the individual parts.
 
-Do not edit only the embedded data in `index.html`; `history.json` is the editable source.
+## Run
 
-## Data snapshot and behavior
+```bash
+python -m pip install -r requirements.txt
+python -m streamlit run app.py
+```
 
-Current season: 2026, complete through Week 9. All 54 matchups and 108 starter box scores are included and verified against team scores. The original archive for 2015–2025 is preserved.
+For Streamlit Community Cloud use app.py as the entry point. The defensive-line
+update adds no dependencies. Optional Streamlit configuration belongs at
+.streamlit/config.toml.
 
-New pages:
-- Points by position: weekly averages or totals, week-range filters, sorting, team weekly detail, player detail, and CSV export. FLEX is separate from RB, WR and TE. WR combines the two WR slots; FLEX combines both FLEX slots.
-- Trade analyzer: compare best legal starting lineups before and after multi-player deals. Initial pools are Week 9 starters only. Add bench players or replacements and edit expected PPG before judging a trade. Historical observed starter averages include zero scores and are not forward projections. It does not assume full current roster ownership from old roster snapshots.
-- Playoff simulator: actual Weeks 10–14 schedule, 2,000–20,000 seeded simulations, per-team scoring adjustments, and fixed future score scenarios. It estimates qualification, division, bye and championship probabilities.
-- Scenario generator: selected team/goal, exhaustive win/loss paths affecting a division, and an illustrative successful finish with downloadable full results. Exact path counts are not probabilities and ignore score locks. Future PF resolves record ties in the Monte Carlo simulation.
+## Validate
 
-Saved qualification rules: three division winners plus three wild cards; top two division winners get byes. Overall record, then total season PF, determines standing. The championship simulation assumes Weeks 15–17, single-week rounds and reseeding; confirm this bracket assumption against league settings. Exact record-and-PF ties use stable manager ordering only as a computational fallback, not a confirmed Yahoo rule.
+```bash
+python -m unittest test_defensive_line.py
+```
 
-The new model uses each team's Weeks 1–9 mean, observed scoring variability shrunk toward a 30-point standard deviation, and uncertainty in team strength. It has no live injury updates, player projections, or NFL bye modeling. Finite-run 0% and 100% are not mathematical elimination or clinch proofs.
-
-The separate older Playoff predictions page remains available with its original historical-variability model; its estimates can differ from the new configurable simulator.
-
-Trade edits, score locks and simulator adjustments are temporary in the current page session. They do not change saved league data. The website does not automatically pull Yahoo results.
-
-## Update files
-
-The included `UPDATE_INSTRUCTIONS.txt` explains the GitHub upload. Run `python build.py` after edits to regenerate `bundle.js` and `index.html`. Calculation tests: `node --test checks/*.test.mjs`.
+Keep competition data access and sharing within the applicable competition terms.
